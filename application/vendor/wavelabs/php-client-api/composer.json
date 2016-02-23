@@ -1,0 +1,25 @@
+{
+  "name": "wavelabs/php-client-api",
+  "type": "library",
+  "description": "PHP client to connect Wavelabs API",
+  "keywords": ["wavelabs", "php api"],
+  "homepage": "https://github.com/nbostech/wavelabs-php-client-api",
+  "license": "MIT",
+  "autoload": {
+	"psr-0": {
+		"Wavelabs": "src"
+	}
+  },
+  "authors": [
+    {
+      "name": "L B Sastry",
+      "email": "lbsastry@nbostech.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "monolog/monolog": "*"
+  },
+   "minimum-stability": "dev" 
+}

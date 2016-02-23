@@ -1,0 +1,9 @@
+{
+  "config": {
+    "vendor-dir": "application/vendor"
+  },
+  "require": {
+    "wavelabs/php-client-api": "^1.0",
+    "cosenary/instagram": "^2.3"
+  }
+}
