@@ -78,7 +78,7 @@ class Facebook extends MY_Controller {
                 header('Location: ./');
             }
 
-            $response = $this->wavelabs->social->facebookConnect($accessToken);
+            $response = $this->nbos->social->facebookConnect($accessToken);
             setAPIMessages();
             if(!empty($response->token)){
                 $this->session->set_userdata("token", $response->token);
@@ -112,7 +112,7 @@ class Facebook extends MY_Controller {
     }
 
     public function login(){
-        $response = $this->wavelabs->social->facebookLogin();
+        $response = $this->nbos->social->facebookLogin();
         if(!empty($response->url)){
             redirect($response->url);
         }

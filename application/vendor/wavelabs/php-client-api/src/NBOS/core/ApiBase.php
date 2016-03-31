@@ -1,7 +1,7 @@
 <?php
-namespace Wavelabs\core;
+namespace NBOS\core;
 
-use Wavelabs\http\Rest;
+use NBOS\http\Rest;
 
 class ApiBase {
 
@@ -13,6 +13,7 @@ class ApiBase {
     protected $clientToken = null;
     protected $member = null;
     protected $last_response = null;
+    protected $last_response_header = null;
     protected $last_http_code = null;
     public static $errors = [];
     public static $fields = [];
@@ -21,15 +22,15 @@ class ApiBase {
 
 
     function __construct(){
-        defined('API_BASE_URL')   OR define('API_BASE_URL', "http://10.9.9.76:8080/starter-app-rest-grails/");
-        defined('CLIENT_ID')      OR define('CLIENT_ID', "my-client");
-        defined('CLIENT_SECRET')  OR define('CLIENT_SECRET', "my-secret");
+        defined('API_HOST_URL')   OR define('API_HOST_URL', "http://api.nbos.in/");
+        defined('API_CLIENT_ID')  OR define('API_CLIENT_ID', "my-client");
+        defined('API_CLIENT_SECRET')  OR define('API_CLIENT_SECRET', "my-secret");
         ApiBase::$fields = $_POST + $_GET;
 
-        if(defined('CLIENT_ID') && defined('CLIENT_SECRET')){
-            $this->setClient(CLIENT_ID, CLIENT_SECRET);
-        }else if(defined('CLIENT_ID')){
-            $this->setClient(CLIENT_ID);
+        if(defined('API_CLIENT_ID') && defined('API_CLIENT_SECRET')){
+            $this->setClient(API_CLIENT_ID, API_CLIENT_SECRET);
+        }else if(defined('API_CLIENT_ID')){
+            $this->setClient(API_CLIENT_ID);
         }
         $this->rest = new Rest();
         if(!empty($_SESSION['api_token'])){
@@ -42,8 +43,9 @@ class ApiBase {
         if(method_exists($this->rest, $method)){
             $this->last_response = $this->rest->{$method}($url, $parems, $format);
             $this->last_http_code = $this->rest->getLastHttpCode();
-            self::$error = null;
-            self::$message = null;
+            $this->last_response_header = $this->rest->getLastResponseHeader();
+            //self::$error = null;
+            //self::$message = null;
             if(isset($this->last_response->errors)){
                 self::setErrors($this->last_response->errors);
             }else if(isset($this->last_response->error_description)){
@@ -55,6 +57,9 @@ class ApiBase {
                     self::setError($this->last_response->message);
                 }
             }
+            if($this->last_response === null){
+                self::setError("Server not responding!");
+            }
             self::__construct();
             return $this->last_response;
         }
@@ -63,6 +68,16 @@ class ApiBase {
 
     function getLastResponse(){
         return $this->last_response;
+    }
+
+    function getLastResponseHeader($param = null){
+        if(!empty($this->last_response_header['Content-Range']) && is_string($this->last_response_header['Content-Range'])){
+            $this->last_response_header['Content-Range'] = json_decode($this->last_response_header['Content-Range']);
+        }
+        if($param !== null && isset($this->last_response_header[$param])){
+            return $this->last_response_header[$param];
+        }
+        return $this->last_response_header;
     }
 
     function getLastHttpCode(){
@@ -101,11 +116,11 @@ class ApiBase {
             $this->clientToken = $_SESSION['api_client_token'];
             return $this->clientToken;
         }else {
-            $this->last_response = $this->apiCall("post", API_BASE_URL . "oauth/token", [
+            $this->last_response = $this->apiCall("post", API_HOST_URL . "oauth/token", [
                 "client_id" => "my-client",
                 "client_secret" => "my-secret",
                 "grant_type" => "client_credentials",
-                "scope" => "oauth.client.r"
+                "scope" => "" //for client token no scope
             ], "x-www-form-urlencoded");
             if(!empty($this->last_response->access_token)){
                 $this->setClientToken($this->last_response);
@@ -132,6 +147,10 @@ class ApiBase {
                 self::$errors[$error->propertyName] = $error->message;
             }
         }
+    }
+
+    public static function setFormErrors($errors = []) {
+        self::setErrors($errors);
     }
 
     public static function setError($error) {

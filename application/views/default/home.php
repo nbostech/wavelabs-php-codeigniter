@@ -1,1 +1,1 @@
-<h2>Welcome <?php echo $response->message; ?></h2>
+<h2>Welcome  </h2>

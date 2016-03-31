@@ -37,7 +37,7 @@ class Instagram extends MY_Controller {
             ));
             $accessToken = $instagram->getOAuthToken($_GET['code']);
             if(!empty($accessToken->access_token)){
-                $response = $this->wavelabs->social->instagramConnect($accessToken->access_token);
+                $response = $this->nbos->social->instagramConnect($accessToken->access_token);
                 setAPIMessages();
                 if(!empty($response->token)){
                     $this->session->set_userdata("token", $response->token);
@@ -51,7 +51,7 @@ class Instagram extends MY_Controller {
     }
 
     public function login(){
-        $response = $this->wavelabs->social->instagramLogin();
+        $response = $this->nbos->social->instagramLogin();
         if(!empty($response->url)){
             redirect($response->url);
         }

@@ -1,7 +1,7 @@
 <?php
-namespace Wavelabs\core;
+namespace NBOS\core;
 
-use Wavelabs\core\ApiBase;
+use NBOS\core\ApiBase;
 
 class Sample extends ApiBase{
 
@@ -10,7 +10,7 @@ class Sample extends ApiBase{
     }
 
     function about(){
-        $this->last_response = $this->rest->get(API_BASE_URL . "api/v0/sample/about/");
+        $this->last_response = $this->rest->get(API_HOST_URL . "api/v0/sample/about/");
         $this->last_http_code = $this->rest->getLastHttpCode();
         return $this->last_response;
     }

@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname($vendorDir));
 
 return array(
-    'Wavelabs' => array($vendorDir . '/wavelabs/php-client-api/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log'),
+    'NBOS' => array($vendorDir . '/wavelabs/php-client-api/src'),
 );

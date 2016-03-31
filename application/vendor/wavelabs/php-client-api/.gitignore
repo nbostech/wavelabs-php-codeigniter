@@ -1,2 +1,4 @@
 .idea
 .idea/**
+src/Wavelabs/logs/**
+src/NBOS/logs/**

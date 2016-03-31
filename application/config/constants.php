@@ -85,24 +85,55 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
-// APP
-defined('API_BASE_URL')   OR define('API_BASE_URL', "http://111.93.2.105:8080/starter-app-rest-grails/");
-defined('CLIENT_ID')      OR define('CLIENT_ID', "my-client");
-defined('CLIENT_SECRET')  OR define('CLIENT_SECRET', "my-secret");
+if( defined("ENVIRONMENT") && (ENVIRONMENT == "development" || ENVIRONMENT == "testing")){
+    // APP
+    defined('API_HOST_URL')         OR define('API_HOST_URL', "http://api.qa1.nbos.in/");
+    defined('API_CLIENT_ID')        OR define('API_CLIENT_ID', "api-client");
+    defined('API_CLIENT_SECRET')    OR define('API_CLIENT_SECRET', "api-secret");
 
-defined('FACEBOOK_APP_ID')        OR define('FACEBOOK_APP_ID', "1655367628045570");
-defined('FACEBOOK_APP_SECRET')    OR define('FACEBOOK_APP_SECRET', "e4abaa327ac018585afdfca834a1ceed");
+    defined('FACEBOOK_APP_ID')        OR define('FACEBOOK_APP_ID', "510108922524128");
+    defined('FACEBOOK_APP_SECRET')    OR define('FACEBOOK_APP_SECRET', "00bd5689d33289cd308ee42df3990467");
 
-defined('GOOGLE_CLIENT_ID')        OR define('GOOGLE_CLIENT_ID', "998894051443-re62sct4t21d9kr0tj84juf97fq47tol.apps.googleusercontent.com");
-defined('GOOGLE_CLIENT_SECRET')    OR define('GOOGLE_CLIENT_SECRET', "nsRD30-Y2beluJ7XdpG36AvA");
+    defined('GOOGLE_CLIENT_ID')        OR define('GOOGLE_CLIENT_ID', "934148761240-7uf49nhf76jset1ad8vatqj9pdflghtj.apps.googleusercontent.com");
+    defined('GOOGLE_CLIENT_SECRET')    OR define('GOOGLE_CLIENT_SECRET', "udILTlXvc3FuJ55yDN01XrLy");
 
-defined('TWITTER_CONSUMER_KEY')    OR define('TWITTER_CONSUMER_KEY', "jTm94nxu1hC3tOrxlvlaBKVlN");
-defined('TWITTER_CONSUMER_SECRET') OR define('TWITTER_CONSUMER_SECRET', "fTiW6Irp5zyMaf1DdplryZ7fhN4AXYN0nzqZeB9xzW5j3uXODN");
+    defined('INSTAGRAM_API_KEY')       OR define('INSTAGRAM_API_KEY', "0fa38988693e4dd59370a670de2bb28d");
+    defined('INSTAGRAM_API_SECRET')    OR define('INSTAGRAM_API_SECRET', "2eb24d4054964079801abd68ffeca1d1");
 
-defined('INSTAGRAM_API_KEY')       OR define('INSTAGRAM_API_KEY', "658234c275544b1c97c9b1c2d1e67146");
-defined('INSTAGRAM_API_SECRET')    OR define('INSTAGRAM_API_SECRET', "d8e65cf8af35439aa1126c8685d1c59e");
+    defined('GITHUB_OAUTH2_CLIENT_ID')     OR define('GITHUB_OAUTH2_CLIENT_ID', "04b542df48479306d92f");
+    defined('GITHUB_OAUTH2_CLIENT_SECRET') OR define('GITHUB_OAUTH2_CLIENT_SECRET', "59d8f9f092ad59174ab78cf8516b438644d1d6ef");
 
-defined('GITHUB_OAUTH2_CLIENT_ID')     OR define('GITHUB_OAUTH2_CLIENT_ID', "3a74fb71ef307db58cf5");
-defined('GITHUB_OAUTH2_CLIENT_SECRET') OR define('GITHUB_OAUTH2_CLIENT_SECRET', "91e84d2c798fa9a38a74e27db1474200d2a0e0a0");
+    defined('LINKEDIN_CLIENT_ID')     OR define('LINKEDIN_CLIENT_ID', "750wziffe02w19");
+    defined('LINKEDIN_CLIENT_SECRET') OR define('LINKEDIN_CLIENT_SECRET', "RzNPKod8dS5lcAj8");
 
-defined('CURL_DEBUG') OR define('CURL_DEBUG', true);
+    defined('TWITTER_CONSUMER_KEY')    OR define('TWITTER_CONSUMER_KEY', "jTm94nxu1hC3tOrxlvlaBKVlN");
+    defined('TWITTER_CONSUMER_SECRET') OR define('TWITTER_CONSUMER_SECRET', "fTiW6Irp5zyMaf1DdplryZ7fhN4AXYN0nzqZeB9xzW5j3uXODN");
+
+    defined('CURL_DEBUG') OR define('CURL_DEBUG', true);
+}else{
+    // APP settings for production
+    defined('API_HOST_URL')         OR define('API_HOST_URL', "http://api.nbos.in/");
+    defined('API_CLIENT_ID')        OR define('API_CLIENT_ID', "my-client");
+    defined('API_CLIENT_SECRET')    OR define('API_CLIENT_SECRET', "my-secret");
+
+    defined('FACEBOOK_APP_ID')        OR define('FACEBOOK_APP_ID', "510108922524128");
+    defined('FACEBOOK_APP_SECRET')    OR define('FACEBOOK_APP_SECRET', "00bd5689d33289cd308ee42df3990467");
+
+    defined('GOOGLE_CLIENT_ID')        OR define('GOOGLE_CLIENT_ID', "934148761240-7uf49nhf76jset1ad8vatqj9pdflghtj.apps.googleusercontent.com");
+    defined('GOOGLE_CLIENT_SECRET')    OR define('GOOGLE_CLIENT_SECRET', "udILTlXvc3FuJ55yDN01XrLy");
+
+    defined('INSTAGRAM_API_KEY')       OR define('INSTAGRAM_API_KEY', "0fa38988693e4dd59370a670de2bb28d");
+    defined('INSTAGRAM_API_SECRET')    OR define('INSTAGRAM_API_SECRET', "2eb24d4054964079801abd68ffeca1d1");
+
+    defined('GITHUB_OAUTH2_CLIENT_ID')     OR define('GITHUB_OAUTH2_CLIENT_ID', "ce41d07eeaf21b953585");
+    defined('GITHUB_OAUTH2_CLIENT_SECRET') OR define('GITHUB_OAUTH2_CLIENT_SECRET', "d7100948b4fff75b8e73b8bab2eb43e25caa7367");
+
+    defined('LINKEDIN_CLIENT_ID')     OR define('LINKEDIN_CLIENT_ID', "750wziffe02w19");
+    defined('LINKEDIN_CLIENT_SECRET') OR define('LINKEDIN_CLIENT_SECRET', "RzNPKod8dS5lcAj8");
+
+    defined('TWITTER_CONSUMER_KEY')    OR define('TWITTER_CONSUMER_KEY', "jTm94nxu1hC3tOrxlvlaBKVlN");
+    defined('TWITTER_CONSUMER_SECRET') OR define('TWITTER_CONSUMER_SECRET', "fTiW6Irp5zyMaf1DdplryZ7fhN4AXYN0nzqZeB9xzW5j3uXODN");
+
+    defined('CURL_DEBUG') OR define('CURL_DEBUG', false);
+}
+

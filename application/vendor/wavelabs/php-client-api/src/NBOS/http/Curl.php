@@ -1,9 +1,10 @@
 <?php
-namespace Wavelabs\http;
+namespace NBOS\http;
 
 class Curl {
 
 	protected $response = '';       // Contains the cURL response for debug
+	protected $response_header = '';
 	protected $session;             // Contains the cURL handler for a session
 	protected $url;                 // URL of the session
 	protected $options = array();   // Populates curl_setopt_array
@@ -15,6 +16,8 @@ class Curl {
 	public $error_string;           // Error message returned as a string
 	public $info = null;            // Returned after request (elapsed time, etc)
 	private $log = null;
+	public $last_info = null;
+	public $last_response_header = null;
 
 	function __construct($url = '')
 	{
@@ -178,8 +181,9 @@ class Curl {
 	public function delete($params, $options = array())
 	{
 		// If its an array (instead of a query string) then format it correctly
-		if (is_array($params))
-		{
+		if(is_array($params) && $this->format == "json"){
+			$params = json_encode($params);
+		}else if (is_array($params)){
 			$params = http_build_query($params, NULL, '&');
 		}
 
@@ -321,12 +325,28 @@ class Curl {
 
 		$this->options();
         curl_setopt($this->session, CURLINFO_HEADER_OUT, true);
+		curl_setopt($this->session, CURLOPT_HEADER, 1);
+
 		// Execute the request & and hide all output
 		$this->response = curl_exec($this->session);
-		$this->info = curl_getinfo($this->session);
-		if(defined('CURL_DEBUG') && $this->log !== null){
-			$this->log->addInfo("Request :".print_r($this->info, true)."\n");
-			$this->log->addInfo("Response :".print_r($this->response, true)."\n");
+		if($this->response !== false){
+			$this->info = curl_getinfo($this->session);
+			// Split header and body response
+			//$header_size = curl_getinfo($this->session, CURLINFO_HEADER_SIZE);
+			//$this->response_header = substr($this->response, 0, $header_size);
+			//$this->response = substr($this->response, $header_size);
+			list($this->response_header, $this->response) = explode("\r\n\r\n", $this->response);
+
+			if(defined('CURL_DEBUG') && $this->log !== null){
+				$this->log->addInfo($this->url, [
+					"Request" => $this->info,
+					"Response" => $this->response
+				]);
+			}
+		}else{
+			if(defined('CURL_DEBUG') && $this->log !== null){
+				$this->log->addError("Server not responding!", ["URL" => $this->url], ["message" => "test"]);
+			}
 		}
 
 		// Request failed
@@ -348,6 +368,7 @@ class Curl {
 		{
 			curl_close($this->session);
 			$this->last_response = $this->response;
+			$this->last_response_header = $this->response_header;
             $this->last_info = $this->info;
 			$this->set_defaults();
 			return $this->last_response;

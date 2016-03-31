@@ -51,7 +51,7 @@ class Github extends MY_Controller {
             if(!empty($accessToken->access_token)){
                 $_SESSION['github_access_token'] = $accessToken->access_token;
 
-                $response = $this->wavelabs->social->gitHubConnect($accessToken->access_token);
+                $response = $this->nbos->social->gitHubConnect($accessToken->access_token);
                 setAPIMessages();
                 if(!empty($response->token)){
                     $this->session->set_userdata("token", $response->token);
@@ -74,7 +74,7 @@ class Github extends MY_Controller {
     }
 
     public function login(){
-        $response = $this->wavelabs->social->gitHubLogin();
+        $response = $this->nbos->social->gitHubLogin();
         if(!empty($response->url)){
             redirect($response->url);
         }

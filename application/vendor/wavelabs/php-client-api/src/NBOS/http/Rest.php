@@ -1,8 +1,8 @@
 <?php
-namespace Wavelabs\http;
+namespace NBOS\http;
 
-use Wavelabs\http\Curl;
-use Wavelabs;
+use NBOS\http\Curl;
+use NBOS;
 
 class Rest
 {
@@ -37,6 +37,7 @@ class Rest
     protected $response_string;
     private $last_http_code = null;
     private $last_response = null;
+	private $last_response_header = null;
 	protected $http_headers = [];
 
     const HTTP_OK = 200;
@@ -97,7 +98,7 @@ class Rest
     }
 
 
-    public function delete($uri, $params = array(), $format = NULL)
+    public function delete($uri, $params = array(), $format = 'json')
     {
         return $this->_call('delete', $uri, $params, $format);
     }
@@ -149,10 +150,25 @@ class Rest
 
         $this->last_http_code = isset($this->curl->last_info['http_code'])?$this->curl->last_info['http_code']:"";
         $this->last_response = $this->validateResponse($response);
-
+		$this->last_response_header = !empty($this->curl->last_response_header)?$this->decodeHeaderInfo($this->curl->last_response_header):null;
+		if($this->last_response === null){
+			NBOS\core\ApiBase::setError("Server not responding!");
+		}
         return $this->last_response;
     }
 
+	private function decodeHeaderInfo($header = ""){
+		$header = explode("\r\n", $header);
+		if(!empty($header)){
+			foreach($header as $key => $val){
+				if(strpos($val, ":") !== false){
+					$val = explode(":", $val, 2);
+					$header[$val[0]] = $val[1];
+				}
+			}
+		}
+		return $header;
+	}
 
     // If a type is passed in that is not supported, use it as a mime type
     public function format($format)
@@ -290,17 +306,17 @@ class Rest
     }
 
     public function validateResponse($response){
-        Wavelabs\core\ApiBase::$error = null;
-        Wavelabs\core\ApiBase::$message = null;
+        NBOS\core\ApiBase::$error = null;
+		NBOS\core\ApiBase::$message = null;
         if(isset($response->errors)){
-            Wavelabs\core\ApiBase::setErrors($response->errors);
+			NBOS\core\ApiBase::setErrors($response->errors);
         }else if(isset($response->error_description)){
-            Wavelabs\core\ApiBase::setError($response->error_description);
+			NBOS\core\ApiBase::setError($response->error_description);
         }else if(isset($response->message)){
 			if($this->last_http_code == 200){
-				Wavelabs\core\ApiBase::setMessage($response->message);
+				NBOS\core\ApiBase::setMessage($response->message);
 			}else{
-				Wavelabs\core\ApiBase::setError($response->message);
+				NBOS\core\ApiBase::setError($response->message);
 			}
         }
         return $response;
@@ -313,6 +329,10 @@ class Rest
     public function getLastResponse(){
         return $this->last_response;
     }
+
+	public function getLastResponseHeader(){
+		return $this->last_response_header;
+	}
 
 	public function setHttpHeader($key, $val){
 		$this->http_headers[$key] = $val;

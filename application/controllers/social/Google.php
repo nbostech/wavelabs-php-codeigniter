@@ -43,7 +43,7 @@ class Google extends MY_Controller
             $access_token = $client->getAccessToken();
 
             if(!empty($access_token['access_token'])){
-                $response = $this->wavelabs->social->googleConnect($access_token['access_token']);
+                $response = $this->nbos->social->googleConnect($access_token['access_token']);
                 setAPIMessages();
                 if(!empty($response->token)){
                     $this->session->set_userdata("token", $response->token);

@@ -1,7 +1,7 @@
 <?php
-namespace Wavelabs\core;
+namespace NBOS\core;
 
-use Wavelabs\core\ApiBase;
+use NBOS\core\ApiBase;
 
 class Auth extends ApiBase
 {
@@ -15,13 +15,17 @@ class Auth extends ApiBase
     {
         $this->setClientTokenHeader();
         $userData['clientId'] = $this->clientId;
-        return $this->apiCall("post", API_BASE_URL . "api/v0/users/signup", $userData);
+        $this->last_response = $this->apiCall("post", API_HOST_URL . "api/identity/v0/users/signup", $userData);
+        if (!empty($this->last_response->token)) {
+            $this->setToken($this->last_response->token);
+        }
+        return $this->last_response;
     }
 
     function login($username, $password)
     {
         $this->setClientTokenHeader();
-        $this->last_response = $this->apiCall("post", API_BASE_URL . "api/v0/auth/login/", [
+        $this->last_response = $this->apiCall("post", API_HOST_URL . "api/identity/v0/auth/login/", [
             "clientId" => $this->clientId,
             "username" => $username,
             "password" => $password
@@ -35,7 +39,7 @@ class Auth extends ApiBase
     function changePassword($password, $newPassword)
     {
         $this->rest->api_key($this->token->token_type . " " . $this->token->access_token, "Authorization");
-        $this->last_response = $this->rest->post(API_BASE_URL . "api/v0/auth/changePassword/", [
+        $this->last_response = $this->rest->post(API_HOST_URL . "api/identity/v0/auth/changePassword/", [
             "password" => $password,
             "newPassword" => $newPassword
         ]);
@@ -46,7 +50,7 @@ class Auth extends ApiBase
     function forgotPassword($email)
     {
         $this->setClientTokenHeader();
-        $this->last_response = $this->rest->post(API_BASE_URL . "api/v0/auth/forgotPassword/", [
+        $this->last_response = $this->rest->post(API_HOST_URL . "api/identity/v0/auth/forgotPassword/", [
             "email" => $email
         ]);
         $this->last_http_code = $this->rest->getLastHttpCode();
@@ -55,7 +59,7 @@ class Auth extends ApiBase
 
     function resetPassword($resetToken)
     {
-        $this->last_response = $this->rest->post(API_BASE_URL . "api/v0/auth/resetPassword/", [
+        $this->last_response = $this->rest->post(API_HOST_URL . "api/identity/v0/auth/resetPassword/", [
 
         ]);
         $this->last_http_code = $this->rest->getLastHttpCode();
@@ -64,9 +68,10 @@ class Auth extends ApiBase
 
     function logout()
     {
-        $response = $this->apiCall("get", API_BASE_URL . "api/v0/auth/logout/");
+        $response = $this->apiCall("get", API_HOST_URL . "api/identity/v0/auth/logout/");
         $this->resetToken();
         $this->resetClientToken();
+        $_SESSION = [];
         return $response;
     }
 }

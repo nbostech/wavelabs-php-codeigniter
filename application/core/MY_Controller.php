@@ -3,22 +3,23 @@
 
 class MY_Controller extends MX_Controller {
 
-    public $theme = "default";
+    public $theme_name = "default";
     public $header_data = [];
 
     public function __construct(){
         parent::__construct();
         $this->load->helper('common');
-        $this->load->library("Wavelabs", "wavelabs");
+        $this->load->library("Nbos", "nbos");
     }
 
-
     public function _template($page_name, $data = []){
-
         $data = $data + $this->header_data;
-        $this->load->view($this->theme."/header", $data);
-        $this->load->view($this->theme."/".$page_name, $data);
-        $this->load->view($this->theme."/footer");
+        setMessage(\NBOS\core\ApiBase::getMessage());
+        setFormErrors(\NBOS\core\ApiBase::getErrors());
+        setError(\NBOS\core\ApiBase::getError());
+        $this->load->view($this->theme_name."/header", $data);
+        $this->load->view($this->theme_name."/".$page_name, $data);
+        $this->load->view($this->theme_name."/footer");
     }
 
 }

@@ -25,7 +25,7 @@ class Member extends MY_Controller
     {
         $data = [];
         if($this->input->post("id") !== null){
-            $member = $this->wavelabs->user->update($this->input->post());
+            $member = $this->nbos->user->update($this->input->post());
             if(!empty($member->id)){
                 $this->session->set_userdata("member", $member);
             }
@@ -39,13 +39,13 @@ class Member extends MY_Controller
     {
         $data = [];
         if (!empty($_POST)) {
-            $response = $this->wavelabs->auth->changePassword($this->input->post("password"), $this->input->post("newPassword"));
+            $response = $this->nbos->auth->changePassword($this->input->post("password"), $this->input->post("newPassword"));
             if (!empty($response->message)) {
                 setMessage($response->message);
                 redirect(base_url()."member/change_password/");
             }else{
-                setFormErrors(\Wavelabs\core\ApiBase::getErrors());
-                setError(\Wavelabs\core\ApiBase::getError());
+                setFormErrors(\NBOS\core\ApiBase::getErrors());
+                setError(\NBOS\core\ApiBase::getError());
             }
         }
         $this->_template("member/change_password", $data);
@@ -55,11 +55,11 @@ class Member extends MY_Controller
     {
         $data = [];
         if($this->input->post("id") !== null){
-            $response = $this->wavelabs->user->updateProfileImage($this->input->post());
+            $response = $this->nbos->user->updateProfileImage($this->input->post());
             redirect(base_url("member/profile_img/"));
         }
         $data['member'] = $this->session->userdata("member");
-        $data['profile_img'] = $this->wavelabs->user->getProfileImage($data['member']->id, "original");
+        $data['profile_img'] = $this->nbos->user->getProfileImage($data['member']->id, "original");
         print_r($data['profile_img']);
         $data['profile_img'] = str_replace("localhost", "starterapp.com", $data['profile_img']);
         $this->_template("member/profile_img", $data);

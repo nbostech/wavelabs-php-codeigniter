@@ -34,9 +34,9 @@ class Twitter extends MY_Controller
             $connection = new TwitterOAuth($this->CONSUMER_KEY, $this->CONSUMER_SECRET, $_SESSION['request_token'], $_SESSION['request_token_secret']);
             $access_token = $connection->getAccessToken($_GET['oauth_verifier']);
             if(!empty($access_token)){
-                $response = $this->wavelabs->social->twitterConnect($access_token);
+                $response = $this->nbos->social->twitterConnect($access_token);
                 setAPIMessages();
-                if($this->wavelabs->social->getLastHttpCode() == 200){
+                if($this->nbos->social->getLastHttpCode() == 200){
                     redirect(base_url()."home/login/");
                 }
                 redirect(base_url()."home/login/");
