@@ -88,8 +88,8 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 if( defined("ENVIRONMENT") && (ENVIRONMENT == "development" || ENVIRONMENT == "testing")){
     // APP
     defined('API_HOST_URL')         OR define('API_HOST_URL', "http://api.qa1.nbos.in/");
-    defined('API_CLIENT_ID')        OR define('API_CLIENT_ID', "api-client");
-    defined('API_CLIENT_SECRET')    OR define('API_CLIENT_SECRET', "api-secret");
+    defined('API_CLIENT_ID')        OR define('API_CLIENT_ID', "sample-app-client");
+    defined('API_CLIENT_SECRET')    OR define('API_CLIENT_SECRET', "sample-app-secret");
 
     defined('FACEBOOK_APP_ID')        OR define('FACEBOOK_APP_ID', "510108922524128");
     defined('FACEBOOK_APP_SECRET')    OR define('FACEBOOK_APP_SECRET', "00bd5689d33289cd308ee42df3990467");

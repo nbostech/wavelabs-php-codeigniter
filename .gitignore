@@ -6,3 +6,4 @@
 !*/cache/.htaccess
 application/cache/**
 .idea/**
+composer.lock

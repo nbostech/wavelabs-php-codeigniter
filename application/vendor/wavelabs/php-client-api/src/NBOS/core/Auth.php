@@ -74,4 +74,26 @@ class Auth extends ApiBase
         $_SESSION = [];
         return $response;
     }
+
+    function verifyToken($access_token, $module = "")
+    {
+        $this->setModuleTokenHeader();
+        if(!empty($module)){
+            $this->setHttpHeader("X-N-ModuleKey", $module);
+        }
+        $this->last_response = $this->apiCall("post", API_HOST_URL."api/oauth/v0/tokens/".$access_token);
+        if(!empty($this->last_response->access_token)){
+            //$this->setToken($this->last_response->token);
+        }
+        return $this->last_response;
+    }
+
+    function getMemberByUUID($uuid, $accessToken = "", $tokenType = "Bearer")
+    {
+        if(!empty($accessToken)){
+            $this->setHttpHeader("Authorization", $tokenType." ".$accessToken);
+        }
+        $this->last_response = $this->apiCall("get", API_HOST_URL . "api/identity/v0/users/".$uuid);
+        return $this->last_response;
+    }
 }

@@ -86,17 +86,17 @@
     },
     {
         "name": "monolog/monolog",
-        "version": "1.18.1",
-        "version_normalized": "1.18.1.0",
+        "version": "1.20.0",
+        "version_normalized": "1.20.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45"
+            "reference": "55841909e2bcde01b5318c35f2b74f8ecc86e037"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
-            "reference": "a5f2734e8c16f3aa21b3da09715d10e15b4d2d45",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/55841909e2bcde01b5318c35f2b74f8ecc86e037",
+            "reference": "55841909e2bcde01b5318c35f2b74f8ecc86e037",
             "shasum": ""
         },
         "require": {
@@ -111,13 +111,13 @@
             "doctrine/couchdb": "~1.0@dev",
             "graylog2/gelf-php": "~1.0",
             "jakub-onderka/php-parallel-lint": "0.9",
+            "php-amqplib/php-amqplib": "~2.4",
             "php-console/php-console": "^3.1.3",
             "phpunit/phpunit": "~4.5",
             "phpunit/phpunit-mock-objects": "2.3.0",
-            "raven/raven": "^0.13",
             "ruflin/elastica": ">=0.90 <3.0",
-            "swiftmailer/swiftmailer": "~5.3",
-            "videlalvaro/php-amqplib": "~2.4"
+            "sentry/sentry": "^0.13",
+            "swiftmailer/swiftmailer": "~5.3"
         },
         "suggest": {
             "aws/aws-sdk-php": "Allow sending log messages to AWS services like DynamoDB",
@@ -126,13 +126,13 @@
             "ext-mongo": "Allow sending log messages to a MongoDB server",
             "graylog2/gelf-php": "Allow sending log messages to a GrayLog2 server",
             "mongodb/mongodb": "Allow sending log messages to a MongoDB server via PHP Driver",
+            "php-amqplib/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib",
             "php-console/php-console": "Allow sending log messages to Google Chrome",
-            "raven/raven": "Allow sending log messages to a Sentry server",
             "rollbar/rollbar": "Allow sending log messages to Rollbar",
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
-            "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
+            "sentry/sentry": "Allow sending log messages to a Sentry server"
         },
-        "time": "2016-03-13 16:08:35",
+        "time": "2016-07-02 14:02:10",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -166,24 +166,24 @@
     },
     {
         "name": "wavelabs/php-client-api",
-        "version": "V1.0.24",
-        "version_normalized": "1.0.24.0",
+        "version": "V1.0.34",
+        "version_normalized": "1.0.34.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nbostech/wavelabs-php-client-api.git",
-            "reference": "aa0a7f53035ef98319687e09da7bf739b50fbe66"
+            "reference": "096adc46b02a8a2b91a3e8c8ce1587561f30a987"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nbostech/wavelabs-php-client-api/zipball/aa0a7f53035ef98319687e09da7bf739b50fbe66",
-            "reference": "aa0a7f53035ef98319687e09da7bf739b50fbe66",
+            "url": "https://api.github.com/repos/nbostech/wavelabs-php-client-api/zipball/096adc46b02a8a2b91a3e8c8ce1587561f30a987",
+            "reference": "096adc46b02a8a2b91a3e8c8ce1587561f30a987",
             "shasum": ""
         },
         "require": {
             "monolog/monolog": "*",
             "php": ">=5.4.0"
         },
-        "time": "2016-03-28 10:22:51",
+        "time": "2016-06-13 05:03:56",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
